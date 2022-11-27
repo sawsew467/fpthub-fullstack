@@ -16,5 +16,3 @@ ReactDOM.render(
   document.getElementById("root")
 );
 
-//Tao la minh
-// ThangTVB

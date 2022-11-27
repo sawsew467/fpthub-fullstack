@@ -4,6 +4,7 @@ import moment from 'moment';
 function Jumbotron(props) {
   // const [currentUser, setCurrentUser] = props.info;
   const currentUser = props.info;
+  console.log(currentUser);
   return (
     <>
       <div className="sm:mt-20 mt-[70px] bg-white dark:bg-black dark:text-white700 flex">

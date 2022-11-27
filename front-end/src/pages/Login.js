@@ -11,7 +11,7 @@ import { getAllPosts } from "../apis/postApis.js";
 function Login() {
   const dispatch = useDispatch();
   const sendDataDemo = () => {
-    window.localStorage.setItem("users", JSON.stringify(DEMO_USERS));
+    window.localStorage.setItem("currentUser", JSON.stringify(DEMO_USERS));
     window.localStorage.setItem("posts", JSON.stringify(DEMO_POSTS));
   };
   const navigate = useNavigate();

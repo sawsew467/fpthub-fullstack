@@ -12,8 +12,6 @@ import { postsSelector } from "../redux/selectors";
 
 function Home(props) {
   const postList = useSelector(postsSelector).reverse();
-  // console.log(postList);
-  // const postList = getAllPosts();
   return (
     <>
       <div className={props.mode === true ? "dark" : "light"}>

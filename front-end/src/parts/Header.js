@@ -11,10 +11,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { handleMoblieMenu, switchDarkMode } from "../redux/actions";
 import { darkmodeSelector, moblieMenuSelector } from "../redux/selectors.js";
 import MobileMenu from "../components/MobileMenu";
+import DEMO_USERS from "../data/usersDemo";
 
 function Header(props) {
   const [currentUser, setCurrentUser] = useState(
-    JSON.parse(window.localStorage.getItem("currentUser"))
+    // JSON.parse(window.localStorage.getItem("currentUser"))
+    DEMO_USERS[0]
   );
   const shortName = (name) => {
     const words = name.split(" ");

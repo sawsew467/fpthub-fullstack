@@ -14,6 +14,8 @@ module.exports = {
         "event": "#EF8A5E",
         "asking": "#E03C81",
         "discussion": "#39393A",
+        "fpoints": "#FFB346",
+        "followers": "#FF5757",
       },
     },
   },

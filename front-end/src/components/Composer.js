@@ -1,8 +1,12 @@
 import React, { useState } from "react";
+import DEMO_USERS from "../data/usersDemo";
 import Poster from "./Poster";
 
 function Composer(props) {
-  const [currentUser, setCurrentUser] = useState(JSON.parse(window.localStorage.getItem('currentUser')));
+  const [currentUser, setCurrentUser] = useState(
+    // JSON.parse(window.localStorage.getItem('currentUser'))
+    DEMO_USERS[0]
+    );
   const [isShow, setIsShow] = useState(false);
   const callbackIsShow = (childData) => {
     setIsShow(childData);

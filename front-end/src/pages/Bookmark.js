@@ -23,7 +23,8 @@ function Bookmark(props) {
             <div className="flex-1 min-h-screen	">
               <p className="dark:text-white700 text-2xl pl-2 sm:pl-0">Dấu trang</p>
               <p className="dark:text-white700 text-md sm:mb-5 mb-2 pl-2 sm:pl-0">
-                @{currentUser[0].userName}
+                {/* @{currentUser[0].userName} */}
+                @ThangTVB
               </p>
               {
                 postList.map((item, index) => {

@@ -13,13 +13,14 @@ import SignIn from "./pages/SignIn";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { getAllPosts } from "./apis/postApis";
+import Ranking from "./pages/Ranking";
 // test
 function App() {
   const isDark = useSelector(darkmodeSelector);
   const postList = useSelector(postsSelector);
-  useEffect(() => {
-    getAllPosts();
-  }, [])
+  // useEffect(() => {
+  //   getAllPosts();
+  // }, []);
   return (
     <>
       <Routes>
@@ -38,6 +39,7 @@ function App() {
         <Route path="/bookmark" element={<Bookmark mode={isDark}></Bookmark>} />
         <Route path="/settings" element={<Settings mode={isDark}></Settings>} />
         <Route path="/profile" element={<Profile mode={isDark}></Profile>} />
+        <Route path="/ranking" element={<Ranking mode={isDark}></Ranking>} />
       </Routes>
     </>
   );

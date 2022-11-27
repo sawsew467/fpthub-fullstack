@@ -63,12 +63,26 @@ function Menu(props) {
               </p>{" "}
             </div>
           </Link>
+          <Link to="/ranking" className="">
+            <div className="flex mb-5 hover:font-semibold">
+              <i className="fa-solid fa-ranking-star text-lg text-[#1a2b5f] dark:text-white700"></i>
+              <p
+                className={
+                  choose == 5
+                    ? "text-lg ml-3 text-[#1a2b5f] font-semibold dark:text-white"
+                    : "text-lg ml-3 text-[#1a2b5f] dark:text-white700"
+                }
+              >
+                Xếp hạng
+              </p>{" "}
+            </div>
+          </Link>
           <Link to="/settings" className="">
             <div className="flex mb-5 hover:font-semibold">
               <i className="fa-solid fa-gear text-lg text-[#1a2b5f] dark:text-white700"></i>
               <p
                 className={
-                  choose == 5
+                  choose == 6
                     ? "text-lg ml-3 text-[#1a2b5f] font-semibold dark:text-white"
                     : "text-lg ml-3 text-[#1a2b5f] dark:text-white700"
                 }

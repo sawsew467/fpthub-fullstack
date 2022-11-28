@@ -1,5 +1,5 @@
 import { IsNotEmpty } from 'class-validator';
-import { BaseEntity, Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, CreateDateColumn } from 'typeorm';
 import { Comment } from "@/interfaces/comment.interface";
 
 @Entity()
@@ -18,5 +18,7 @@ export class CommentEnitty extends BaseEntity implements Comment {
     @Column()
     @IsNotEmpty()
     content: string;
-    
+ 
+    @CreateDateColumn()
+    createdAt: Date;
 }

@@ -2,52 +2,48 @@ import { compare, hash } from 'bcrypt';
 import { sign } from 'jsonwebtoken';
 import { EntityRepository, Repository } from 'typeorm';
 import { SECRET_KEY } from '@config';
-import { CreateUserDto } from '@/dtos/accounts.dto';
-import { UserEntity } from '@/entities/account.entity';
+import { CreateAccountDto } from '@/dtos/accounts.dto';
+import { AccountEntity } from '@/entities/account.entity';
 import { HttpException } from '@exceptions/HttpException';
 import { DataStoredInToken, TokenData } from '@interfaces/auth.interface';
-import { User } from '@/interfaces/accounts.interface';
+import { Account } from '@/interfaces/accounts.interface';
 import { isEmpty } from '@utils/util';
+import AccountService from './accounts.service';
 
 @EntityRepository()
-class AuthService extends Repository<UserEntity> {
-  public async signup(userData: CreateUserDto): Promise<User> {
-    if (isEmpty(userData)) throw new HttpException(400, "userData is empty");
+class AuthService extends Repository<AccountEntity> {
+  private accountService: AccountService = new AccountService();
 
-    const findUser: User = await UserEntity.findOne({ where: { email: userData.email } });
-    if (findUser) throw new HttpException(409, `This email ${userData.email} already exists`);
-
-    const hashedPassword = await hash(userData.password, 10);
-    const createUserData: User = await UserEntity.create({ ...userData, password: hashedPassword }).save();
-    return createUserData;
+  public async signup(accountData: CreateAccountDto): Promise< Partial<Account> > {
+    const createAccountData = await this.accountService.createAccount(accountData);
+    return createAccountData;
   }
 
-  public async login(userData: CreateUserDto): Promise<{ cookie: string; findUser: User }> {
-    if (isEmpty(userData)) throw new HttpException(400, "userData is empty");
+  public async login(accountData: CreateAccountDto): Promise<{ cookie: string; findAccount: Partial<Account> }> {
+    if (isEmpty(accountData)) throw new HttpException(400, "account data is empty");
 
-    const findUser: User = await UserEntity.findOne({ where: { email: userData.email } });
-    if (!findUser) throw new HttpException(409, `This email ${userData.email} was not found`);
-
-    const isPasswordMatching: boolean = await compare(userData.password, findUser.password);
+    const findAccount: Account = await this.accountService.findAccountByEmail(accountData.email);
+   
+    const isPasswordMatching: boolean = await compare(accountData.password, findAccount.password);
     if (!isPasswordMatching) throw new HttpException(409, "Password not matching");
 
-    const tokenData = this.createToken(findUser);
+    const tokenData = this.createToken(findAccount);
     const cookie = this.createCookie(tokenData);
 
-    return { cookie, findUser };
+    return { cookie, findAccount };
   }
 
-  public async logout(userData: User): Promise<User> {
-    if (isEmpty(userData)) throw new HttpException(400, "userData is empty");
+  public async logout(accountData: Account): Promise<Account> {
+    if (isEmpty(accountData)) throw new HttpException(400, "account data is empty");
 
-    const findUser: User = await UserEntity.findOne({ where: { email: userData.email, password: userData.password } });
-    if (!findUser) throw new HttpException(409, "User doesn't exist");
+    const findAccount: Account = await AccountEntity.findOne({ where: { email: accountData.email, password: accountData.password } });
+    if (!findAccount) throw new HttpException(409, "User doesn't exist");
 
-    return findUser;
+    return findAccount;
   }
 
-  public createToken(user: User): TokenData {
-    const dataStoredInToken: DataStoredInToken = { id: user.id };
+  public createToken(account: Partial<Account>): TokenData {
+    const dataStoredInToken: DataStoredInToken = { id: account.id };
     const secretKey: string = SECRET_KEY;
     const expiresIn: number = 60 * 60;
 

@@ -1,16 +1,21 @@
 import { IsNotEmpty } from 'class-validator';
-import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, Unique } from 'typeorm';
+import { 
+  BaseEntity, 
+  Entity, 
+  PrimaryGeneratedColumn, 
+  Column, 
+  Unique, 
+  OneToMany 
+} from 'typeorm';
 import { Account } from '@/interfaces/accounts.interface';
+import { PostEntity } from './post.entity';
+import { CommentEnitty } from './comment.entity';
 
 @Entity()
 export class AccountEntity extends BaseEntity implements Account {
   @PrimaryGeneratedColumn()
-  accountID: number;
-  
-  @Column()
-  @IsNotEmpty()
-  studentName: string;
-  
+  id: number;
+
   @Column()
   @IsNotEmpty()
   @Unique(['email'])
@@ -19,16 +24,14 @@ export class AccountEntity extends BaseEntity implements Account {
   @Column()
   @IsNotEmpty()
   password: string;
-  
-  @Column()
-  @IsNotEmpty()
-  follow: number;  
-  
+
   @Column()
   @IsNotEmpty()
   role: number;
 
-  @Column()
-  @IsNotEmpty()
-  avatar: string;
+  @OneToMany(() => PostEntity, (post) => post.account)
+  posts: PostEntity[];
+
+  @OneToMany(() => CommentEnitty, (comment) => comment.account)
+  comments: CommentEnitty[]
 }

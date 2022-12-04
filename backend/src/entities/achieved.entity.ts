@@ -5,17 +5,19 @@ import { Achieved } from "@/interfaces/achieved.inteface";
 export class AchievedEntity extends BaseEntity implements Achieved {
     @PrimaryColumn()
     accountID: number;
-
+    
     @PrimaryColumn()
     majorID: string;
-
+    
     @Column()
     cocVang: number;
-
+    
     @Column()
     excellent: number;
-
+    
     @Column()
     good: number;
     
+    @Column()
+    point: number;
 }

@@ -1,6 +1,4 @@
 export interface Comment {
-    commentID: number;
-    postID: number;
-    accountID: number;
+    id: number;
     content: string;
 }

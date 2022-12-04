@@ -34,7 +34,7 @@ function Bookmark() {
               </p>
               {postList.map((item, index) => {
                 if (currentUser.bookmarkList.includes(item.id) === true)
-                  return <Post key={item.id} postInfo={item}></Post>;
+                  return <Post key={item.id} postInfo={item} isShowComments={false}></Post>;
               })}
             </div>
             <Trending></Trending>

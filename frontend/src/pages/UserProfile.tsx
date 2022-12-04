@@ -30,7 +30,7 @@ function UserProfile() {
             <div className="flex-1 min-h-screen">
               {postList.map((post, index) => {
                 if (post.author === targetedUser.id)
-                  return <Post key={post.id} postInfo={post}></Post>;
+                  return <Post key={post.id} postInfo={post} isShowComments={false}></Post>;
               })}
             </div>
             <Trending></Trending>

@@ -2,17 +2,19 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { IState as AppInterface } from "../App";
 import DEMO_USERS from "../data/usersDemo";
-import moment from 'moment';
+import moment from "moment";
 import InteractionBar from "./InteractionBar";
 import { CardMedia } from "@mui/material";
 import { State } from "../redux";
 import { useSelector } from "react-redux";
+import Comment from "./Comment";
 
 interface IProps {
   postInfo: AppInterface["post"];
+  isShowComments: boolean;
 }
 
-function Post({ postInfo }: IProps) {
+function Post({ postInfo, isShowComments }: IProps) {
   const userList: AppInterface["userList"] = useSelector(
     (state: State) => state.users
   );
@@ -22,15 +24,17 @@ function Post({ postInfo }: IProps) {
   const [isShow, setIsShow] = useState<boolean>(false);
   return (
     <>
-      <div className="w-full flex flex-col sm:gap-3 gap-2 bg-white dark:bg-[#242526] dark:text-white700 sm:rounded-xl sm:drop-shadow-xl sm:p-5 p-2 min-h-[5rem] sm:mb-7 mb-2">
+      <div className="w-full flex flex-col bg-white dark:bg-[#242526] dark:text-white700 sm:rounded-xl sm:drop-shadow-xl sm:p-5 p-2 sm:pb-0 min-h-[5rem] sm:mb-7 mb-2">
         <div className="flex justify-between">
           <div className="flex sm:gap-5 gap-2">
-            <img className="h-[50px] w-[50px] rounded-full object-cover" src={authorInfo.avatar} alt=""></img>
+            <img
+              className="h-[50px] w-[50px] rounded-full object-cover"
+              src={authorInfo.avatar}
+              alt=""
+            ></img>
             <div className="flex flex-col justify-center">
               <div className="flex gap-2">
-                <Link
-                  to={`/profile/${postInfo.author}`}
-                >
+                <Link to={`/profile/${postInfo.author}`}>
                   <p className="text-lg font-semibold hover:underline">
                     {authorInfo.name}
                   </p>
@@ -47,17 +51,12 @@ function Post({ postInfo }: IProps) {
           <div className="flex sm:gap-5 gap-3">
             <div className="flex gap-2">
               <i className="fa-solid fa-seedling text-lg text-green"></i>
-              <p className="text-lg text-green">
-                {postInfo.counterSeed}
-              </p>
+              <p className="text-lg text-green">{postInfo.counterSeed}</p>
               <p className="text-lg text-green sm:block hidden">Mầm</p>
             </div>
             <div className="flex gap-2">
               <i className="fa-solid fa-flag text-lg text-red"></i>
-              <p className="text-lg text-red">
-                {postInfo.counterFlag}
-
-              </p>
+              <p className="text-lg text-red">{postInfo.counterFlag}</p>
               <p className="text-lg text-red sm:block hidden">Cờ</p>
             </div>
             <div
@@ -70,7 +69,7 @@ function Post({ postInfo }: IProps) {
               <div className="flex flex-col bg-white drop-shadow-lg rounded-lg dark:bg-[#242526] absolute right-4 top-12">
                 <p
                   className="text-lg px-4 py-2 rounded-tl-lg rounded-tr-lg dark:text-white700 hover:bg-slate-200 cursor-pointer"
-                //   onClick={deletePost}
+                  //   onClick={deletePost}
                   // onClick={()}
                 >
                   Xóa bài viết
@@ -85,21 +84,20 @@ function Post({ postInfo }: IProps) {
             )}
           </div>
         </div>
-        <div className="text-lg">{postInfo.content}</div>
+        <div className="text-lg my-3">{postInfo.content}</div>
         {postInfo.attachments && (
-              <CardMedia
-                component="img"
-                image={postInfo.attachments || ""}
-                title="Title"
-                className="w-7 h-[320px] object-contain"
-                style={{
-                  marginBottom: "8px",
-                }}
-              />
-            )}
-        <InteractionBar
-          postInfo={postInfo}
-        ></InteractionBar>
+          <CardMedia
+            component="img"
+            image={postInfo.attachments || ""}
+            title="Title"
+            className="w-7 h-[320px] object-contain"
+            style={{
+              marginBottom: "8px",
+            }}
+          />
+        )}
+        <InteractionBar postInfo={postInfo}></InteractionBar>
+        {isShowComments && <Comment></Comment>}
       </div>
     </>
   );

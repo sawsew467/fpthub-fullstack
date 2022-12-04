@@ -1,6 +1,5 @@
 import React, { useRef, useState } from "react";
 import Jumbotron from "../components/Jumbotron";
-import DEMO_USERS from "../data/usersDemo";
 import Header from "../parts/Header";
 import { CardMedia } from "@mui/material";
 import { useSelector } from "react-redux";
@@ -8,6 +7,7 @@ import { IState as AppInterface } from "../App";
 import { State, userActionCreators } from "../redux";
 import { useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
+import { log } from "console";
 
 function Settings() {
   const userList: AppInterface["userList"] = useSelector(
@@ -23,7 +23,9 @@ function Settings() {
     let file = event.target.files[0];
     let reader = new FileReader();
     reader.readAsDataURL(file);
+    
     reader.onload = function () {
+      console.log(reader.result);
       setUpdatedUser({
         ...updatedUser,
         avatar: `${reader.result}`,
@@ -104,15 +106,22 @@ function Settings() {
                         disabled
                       ></input>
                     </div>
-                    <div className="flex flex-col">
+                    <div className="flex flex-col relative">
                       <p className="text-lg">
                         Password<span className="text-red">*</span>
                       </p>
-                      <input
-                        className="text-lg py-1 px-3 rounded-xl border-[1px] bg-neutral-100 outline-none placeholder:text-slate-400 text-slate-400 border-solid	border-slate-500 dark:border-slate-700 dark:bg-[#3a3b3c] cursor-not-allowed"
-                        placeholder="******"
-                        disabled
-                      ></input>
+                      <div className="relative flex items-center right-0 bottom-0">
+                        <input
+                          className="w-full text-lg py-1 px-3 rounded-xl border-[1px] bg-neutral-100 outline-none placeholder:text-slate-400 text-slate-400 border-solid	border-slate-500 dark:border-slate-700 dark:bg-[#3a3b3c] cursor-not-allowed"
+                          placeholder="******"
+                          disabled
+                        ></input>
+                        <div className="absolute bottom-0 h-full flex items-center w-full justify-end">
+                          <button className="h-full px-4 bg-yellow-500 text-white rounded-tr-xl rounded-br-xl border-[1px] border-l-0 border-slate-500">
+                            Change password
+                          </button>
+                        </div>
+                      </div>
                     </div>
                   </div>
                   <p className="mt-2 text-lg">

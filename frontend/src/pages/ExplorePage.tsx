@@ -1,6 +1,7 @@
 import React from 'react'
 import Menu from '../components/Menu'
 import Trending from '../components/Trending'
+import ADVERTISEMENT_DEMO from '../data/companyDemo'
 import FAKE_TRENDING_LIST from '../data/trendingList'
 import Header from '../parts/Header'
 
@@ -20,14 +21,14 @@ function ExplorePage() {
                   alt=""
                 ></img>
                 <div className="sm:p-5 p-2">
-                  {FAKE_TRENDING_LIST.map((item, index) => (
-                    <div key={index} className="flex flex-col mb-1 last:mb-0 relative">
-                      <p className="text-sm">
-                        Chủ đề nổi trội ở {item.position}
-                      </p>
-                      <span className="text-md font-medium">#{item.tag}</span>
-                      <i className="fa-solid fa-ellipsis absolute top-0 right-0 text-md"></i>
+                  {ADVERTISEMENT_DEMO.map((item, index) => (
+                    <div key={index} className="flex flex-col mb-1 last:mb-0 relative group cursor-pointer border-b-[1px] last:border-0 pb-1">
+                    <p className="text-sm w-11/12 truncate">{item.title}</p>
+                    <span className="text-md font-medium">{item.company}</span>
+                    <div className="absolute h-full flex items-center right-1 group-hover:right-0 transition-all">
+                      <i className="fa-solid fa-angle-right"></i>
                     </div>
+                  </div>
                   ))}
                 </div>
               </div>

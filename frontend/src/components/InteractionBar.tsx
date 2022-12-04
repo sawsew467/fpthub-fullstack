@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
 import { postActionCreators, State, userActionCreators } from "../redux";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router";
 
 interface IProps {
   postInfo: AppInterface["post"];
@@ -106,9 +107,13 @@ function InteractionBar({ postInfo }: IProps) {
     flagPost({ currentUserID: currentUser.id, postID: postInfo.id });
     setPosts(newPostList);
   };
+  const navigate = useNavigate();
+  const commentClick = () => {
+    navigate(`/post/${postInfo.id}`)
+  }
   return (
     <>
-      <div className="sm:pt-4 pt-2 border-t-[1px] flex ">
+      <div className="sm:py-4 py-2 border-t-[1px] flex ">
         {isSeed ? (
           <div
             className="w-1/4 flex justify-center items-center border-r-[1px] cursor-pointer"
@@ -145,7 +150,7 @@ function InteractionBar({ postInfo }: IProps) {
         )}
         <div
           className="w-1/4 flex justify-center items-center border-r-[1px] cursor-pointer"
-          // onClick={commentClick}
+          onClick={commentClick}
         >
           <i className="fa-solid fa-comment text-lg mr-3 text-slate-400 dark:text-[#94a3b8]"></i>
           <p className="text-lg text-slate-400 dark:text-[#94a3b8] hidden sm:inline">

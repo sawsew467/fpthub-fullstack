@@ -2,14 +2,14 @@ import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import { useSelector } from "react-redux";
-import { State } from "./redux";
 import Bookmark from "./pages/Bookmark";
 import Notifications from "./pages/Notifications";
 import ExplorePage from "./pages/ExplorePage";
 import UserProfile from "./pages/UserProfile";
 import Ranking from "./pages/Ranking";
 import Settings from "./pages/Settings";
+import PostDetail from "./pages/PostDetail";
+import Chat from "./pages/Chat";
 
 export interface IState {
   post: {
@@ -65,7 +65,9 @@ function App() {
         />
         <Route path="/explore" element={<ExplorePage></ExplorePage>} />
         <Route path="/profile/:id" element={<UserProfile></UserProfile>} />
+        <Route path="/post/:id" element={<PostDetail></PostDetail>} />
         <Route path="/ranking" element={<Ranking></Ranking>} /> 
+        <Route path="/chat" element={<Chat></Chat>} />
         <Route path="/settings" element={<Settings></Settings>} />
         {/* <Route path="/signin" element={<SignIn></SignIn>} />
         

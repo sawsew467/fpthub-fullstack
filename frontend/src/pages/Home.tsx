@@ -23,7 +23,7 @@ function Home() {
               <Composer></Composer>
               <div className="flex flex-col">
                 {postList.map((post, index) => (
-                  <Post key={post.id} postInfo={post}></Post>
+                  <Post key={post.id} postInfo={post} isShowComments={false}></Post>
                 ))}
               </div>
             </div>

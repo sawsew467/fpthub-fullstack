@@ -27,7 +27,7 @@ function Menu({choose}: IProps) {
           </Link>
           <Link to="/explore" className="">
             <div className="flex mb-5 hover:font-semibold">
-              <i className="fa-solid fa-hashtag text-lg text-[#1a2b5f] dark:text-white700"></i>
+              <i className="fa-solid fa-building text-lg text-[#1a2b5f] dark:text-white700"></i>
               <p
                 className={
                   choose === 2
@@ -35,7 +35,7 @@ function Menu({choose}: IProps) {
                     : "text-lg ml-3 text-[#1a2b5f] dark:text-white700"
                 }
               >
-                Chủ đề
+                Khám phá
               </p>
             </div>
           </Link>
@@ -81,12 +81,26 @@ function Menu({choose}: IProps) {
               </p>{" "}
             </div>
           </Link>
+          <Link to="/chat" className="">
+            <div className="flex mb-5 hover:font-semibold">
+              <i className="fa-solid fa-comment-dots text-lg text-[#1a2b5f] dark:text-white700"></i>
+              <p
+                className={
+                  choose === 6
+                    ? "text-lg ml-3 text-[#1a2b5f] font-semibold dark:text-white"
+                    : "text-lg ml-3 text-[#1a2b5f] dark:text-white700"
+                }
+              >
+                Trò chuyện
+              </p>{" "}
+            </div>
+          </Link>
           <Link to="/settings" className="">
             <div className="flex mb-5 hover:font-semibold">
               <i className="fa-solid fa-gear text-lg text-[#1a2b5f] dark:text-white700"></i>
               <p
                 className={
-                  choose === 6
+                  choose === 7
                     ? "text-lg ml-3 text-[#1a2b5f] font-semibold dark:text-white"
                     : "text-lg ml-3 text-[#1a2b5f] dark:text-white700"
                 }

@@ -28,8 +28,8 @@ function Login() {
       const response = await axios(option);
       const { token, email } = response.data.data;
       localStorage.setItem("token", token);
-      console.log(token);
-      console.log(email);
+      console.log("token: ", token);
+      console.log("email: ", email);
     } catch (error) {
       console.log("error: ", error);
     }

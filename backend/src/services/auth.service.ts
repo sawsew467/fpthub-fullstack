@@ -19,7 +19,7 @@ class AuthService extends Repository<AccountEntity> {
     return createAccountData;
   }
 
-  public async login(accountData: CreateAccountDto): Promise<{ cookie: string; findAccount: Partial<Account> }> {
+  public async login(accountData: CreateAccountDto): Promise<{ cookie: string; findAccount: Partial<Account>, token: string }> {
     if (isEmpty(accountData)) throw new HttpException(400, "account data is empty");
 
     const findAccount: Account = await this.accountService.findAccountByEmail(accountData.email);
@@ -30,7 +30,7 @@ class AuthService extends Repository<AccountEntity> {
     const tokenData = this.createToken(findAccount);
     const cookie = this.createCookie(tokenData);
 
-    return { cookie, findAccount };
+    return { cookie, findAccount, token: tokenData.token };
   }
 
   public async logout(accountData: Account): Promise<Account> {

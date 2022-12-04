@@ -23,11 +23,11 @@ class AuthController {
   public logIn = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const accountData: CreateAccountDto = req.body;
-      let { cookie, findAccount } = await this.authService.login(accountData);
+      let { cookie, findAccount, token } = await this.authService.login(accountData);
       findAccount = plainClass(ReturnAccountDto, findAccount);
 
       res.setHeader('Set-Cookie', [cookie]);
-      res.status(200).json({ data: findAccount, message: 'login' });
+      res.status(200).json({ data: findAccount, token, message: 'login' });
     } catch (error) {
       next(error);
     }

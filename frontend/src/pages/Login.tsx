@@ -26,7 +26,8 @@ function Login() {
         data: inputData,
       };
       const response = await axios(option);
-      const { token, email } = response.data.data;
+      const { email } = response.data.data;
+      const { token } = response.data
       localStorage.setItem("token", token);
       console.log("token: ", token);
       console.log("email: ", email);

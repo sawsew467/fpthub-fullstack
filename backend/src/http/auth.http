@@ -13,12 +13,12 @@ Content-Type: application/json
 
 ###
 # User Login
-POST {{ baseURL }}/login
+POST http://localhost:5000/auth/login
 Content-Type: application/json
 
 {
-    "email": "example@email.com",
-	"password": "password"
+    "email": "minhnqnde160634@fpt.edu.vn",
+	"password": "Minh0914121791"
 }
 
 ###

@@ -1,18 +1,20 @@
 import { NextFunction, Request, Response } from 'express';
-import { CreateUserDto } from '@/dtos/accounts.dto';
-import { RequestWithUser } from '@interfaces/auth.interface';
+import { CreateAccountDto, ReturnAccountDto } from '@/dtos/accounts.dto';
+import { RequestWithAccount } from '@interfaces/auth.interface';
 import { Account } from '@/interfaces/accounts.interface';
 import AuthService from '@services/auth.service';
+import { plainClass } from '@/utils/plainClass';
 
 class AuthController {
   public authService = new AuthService();
 
   public signUp = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const userData: CreateUserDto = req.body;
-      const signUpUserData: Account = await this.authService.signup(userData);
+      const accountData: CreateAccountDto = req.body;
+      let signUpAccountData: Partial<Account> = await this.authService.signup(accountData);
+      signUpAccountData = plainClass(ReturnAccountDto, signUpAccountData);
 
-      res.status(201).json({ data: signUpUserData, message: 'signup' });
+      res.status(201).json({ data: signUpAccountData, message: 'signup' });
     } catch (error) {
       next(error);
     }
@@ -20,20 +22,22 @@ class AuthController {
 
   public logIn = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const userData: CreateUserDto = req.body;
-      const { cookie, findUser } = await this.authService.login(userData);
+      const accountData: CreateAccountDto = req.body;
+      let { cookie, findAccount } = await this.authService.login(accountData);
+      findAccount = plainClass(ReturnAccountDto, findAccount);
 
       res.setHeader('Set-Cookie', [cookie]);
-      res.status(200).json({ data: findUser, message: 'login' });
+      res.status(200).json({ data: findAccount, message: 'login' });
     } catch (error) {
       next(error);
     }
   };
 
-  public logOut = async (req: RequestWithUser, res: Response, next: NextFunction): Promise<void> => {
+  public logOut = async (req: RequestWithAccount, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const userData: Account = req.account;
-      const logOutUserData: Account = await this.authService.logout(userData);
+      const accountData: Account = req.account;
+      let logOutUserData: Partial<Account> = await this.authService.logout(accountData);
+      logOutUserData = plainClass(ReturnAccountDto, logOutUserData);
 
       res.setHeader('Set-Cookie', ['Authorization=; Max-age=0']);
       res.status(200).json({ data: logOutUserData, message: 'logout' });

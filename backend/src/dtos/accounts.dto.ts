@@ -7,29 +7,12 @@ export class CreateAccountDto {
 
   @IsString()
   public password: string;
-
-  @IsString()
-  public fullname: string;
-
-  @IsString()
-  public majorID: string;
-
-  @IsString()
-  public avatar: string;
 }
 
-export class AccountDto {
+export class ReturnAccountDto {
+  @Expose()
+  public id: number
+
   @Expose()
   public email: string;
-  
-  @Expose()
-  public fullname: string;
-
-  
-  @Expose()
-  public majorID: string;
-  
-  @Expose()
-  public avatar: string;
 }
-

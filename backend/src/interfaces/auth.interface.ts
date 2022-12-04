@@ -1,5 +1,5 @@
 import { Request } from 'express';
-import { RequestAccount } from '@/interfaces/accounts.interface';
+import { Account } from './accounts.interface';
 
 export interface DataStoredInToken {
   id: number;
@@ -10,6 +10,6 @@ export interface TokenData {
   expiresIn: number;
 }
 
-export interface RequestWithUser extends Request {
-  account: RequestAccount;
+export interface RequestWithAccount extends Request {
+  account: Account;
 }

@@ -4,4 +4,5 @@ export interface Achieved {
     cocVang: number;
     excellent: number;
     good: number;
+    point: number
 }

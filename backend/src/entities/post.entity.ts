@@ -1,16 +1,22 @@
 import { IsNotEmpty } from 'class-validator';
-import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, CreateDateColumn } from 'typeorm';
+import { 
+    BaseEntity, 
+    Entity, 
+    PrimaryGeneratedColumn, 
+    Column, 
+    CreateDateColumn, 
+    ManyToOne,
+    OneToMany
+} from 'typeorm';
 import { Post } from '@/interfaces/post.interface';
+import { AccountEntity } from './account.entity';
+import { CommentEnitty } from './comment.entity';
 
 @Entity()
 export class PostEntity extends BaseEntity implements Post {
     @PrimaryGeneratedColumn()
-    postID: number;
-    
-    @Column()
-    @IsNotEmpty()
-    accountID: number;
-    
+    id: number;
+        
     @Column()
     @IsNotEmpty()
     tag: string;
@@ -18,9 +24,6 @@ export class PostEntity extends BaseEntity implements Post {
     @Column()
     like: number;
     
-    @Column()
-    dislike: number;
-
     @Column()
     @IsNotEmpty()
     content: string;
@@ -30,4 +33,10 @@ export class PostEntity extends BaseEntity implements Post {
 
     @CreateDateColumn()
     createdAt: Date;
+
+    @ManyToOne(() => AccountEntity, (account) => account.posts)
+    account: AccountEntity;
+
+    @OneToMany(() => CommentEnitty, (comment) => comment.post)
+    comments: CommentEnitty[]
 }

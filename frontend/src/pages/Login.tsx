@@ -31,7 +31,7 @@ function Login() {
       console.log(token);
       console.log(email);
     } catch (error) {
-      console.log(error);
+      console.log("error: ", error);
     }
   };
   const sendDataDemo = (): void => {

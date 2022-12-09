@@ -6,10 +6,17 @@ import UserProfileService from "@/services/userProfile.service";
 class UserProfilesController {
     public userProfileService = new UserProfileService();
 
+// user profile
+// thông tin cá nhân
+// Số lượng bái post của người đó
+// danh hiệu
+
+
+//Viết post
     public getUserProfile = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
-            const profileID: number = Number(req.params.id);
-            const findUserProfileData: UserProfile = await this.userProfileService.findUserProfileById(profileID);
+            const accountId: number = Number(req.params.id);
+            const findUserProfileData: UserProfile = await this.userProfileService.findUserProfileById(accountId);
             res.status(200).json({ data: findUserProfileData, messages: 'findOne' });
         } catch (error) {
             next(error);

@@ -10,6 +10,9 @@ export class AchievedEntity extends BaseEntity implements Achieved {
     majorID: string;
     
     @Column()
+    fullname: string;
+
+    @Column()
     cocVang: number;
     
     @Column()

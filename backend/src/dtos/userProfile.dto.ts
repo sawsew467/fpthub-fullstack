@@ -15,7 +15,7 @@ export class CreateUserProfileDto {
     public avatar: string;
 
     @IsNumber()
-    public accountId: string;
+    public accountId: number;
 }
 
 export class UpdateUserProfile {

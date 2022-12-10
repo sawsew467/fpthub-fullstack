@@ -27,12 +27,12 @@ class AccountService extends Repository<AccountEntity> {
     return findAccount;
   }
 
-  public async findAccountById(accountID: number): Promise<Account> {
+  public async findAccountById(accountID: number): Promise<AccountEntity> {
     if (isEmpty(accountID)){
       throw new HttpException(400, "AccountID is empty");
     } 
 
-    const findAccount: Account = await AccountEntity.findOne({ where: { id: accountID } });
+    const findAccount: AccountEntity = await AccountEntity.findOne({ where: { id: accountID } });
     if (!findAccount) {
       throw new HttpException(409, "Account doesn't exist");
     } 

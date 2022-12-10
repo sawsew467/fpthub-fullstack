@@ -28,7 +28,9 @@ function Login() {
       const response = await axios(option);
       const { email } = response.data.data;
       const { token } = response.data
+      const { id } = response.data.data
       localStorage.setItem("token", token);
+      localStorage.setItem("currentID", id);
       console.log("token: ", token);
       console.log("email: ", email);
     } catch (error) {

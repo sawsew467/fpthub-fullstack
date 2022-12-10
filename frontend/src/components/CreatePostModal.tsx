@@ -34,11 +34,15 @@ function CreatePostModal({ setIsShow }: IProps) {
   const { addPost } = bindActionCreators(postActionCreators, dispath);
   const handleSubmit = async () => {
     try {
-      const token = JSON.parse(`localStorage.getItem("token")`);
+      const token = JSON.parse(`${localStorage.getItem("token")}`);
+      const currentID = JSON.parse(`${localStorage.getItem("currentID")}`);
       const options = {
         method: "post",
-        url: "/post",
-        data: newPost,
+        url: "/posts",
+        data: {
+          ...newPost,
+          accountID: currentID,
+        },
         header: {
           Authorization: `Bearer ${token}`,
         },

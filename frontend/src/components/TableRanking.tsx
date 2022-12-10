@@ -41,8 +41,8 @@ function TableRanking() {
                 </div>
               </div>
               <div className="flex flex-row w-1/3 justify-around">
-                <p className="text-lg text-fpoints">280</p>
-                <p className="text-lg text-followers">13</p>
+                <p className="text-lg text-fpoints">20</p>
+                <p className="text-lg text-followers">20</p>
               </div>
             </div>
           ))}

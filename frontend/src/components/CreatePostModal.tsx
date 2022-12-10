@@ -10,6 +10,7 @@ import { bindActionCreators } from "redux";
 import { postActionCreators } from "../redux";
 import { v4 as uuidv4 } from "uuid";
 import { CardMedia } from "@mui/material";
+import axios from "axios";
 
 interface IProps {
   setIsShow: React.Dispatch<React.SetStateAction<boolean>>;
@@ -31,9 +32,24 @@ function CreatePostModal({ setIsShow }: IProps) {
   });
   const dispath = useDispatch();
   const { addPost } = bindActionCreators(postActionCreators, dispath);
-  const handleSubmit = () => {
-    addPost(newPost);
-    setIsShow(false);
+  const handleSubmit = async () => {
+    try {
+      const token = JSON.parse(`localStorage.getItem("token")`);
+      const options = {
+        method: "post",
+        url: "/post",
+        data: newPost,
+        header: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const response = await axios(options);
+      console.log(response);
+      addPost(newPost);
+      setIsShow(false);
+    } catch (err) {
+      console.log(err);
+    }
   };
   const inputRef = useRef(null);
   function getBase64(event: any) {
@@ -47,7 +63,7 @@ function CreatePostModal({ setIsShow }: IProps) {
       });
     };
     reader.onerror = function (error) {
-      console.log('Error: ', error);
+      console.log("Error: ", error);
     };
   }
   return (
@@ -179,18 +195,18 @@ function CreatePostModal({ setIsShow }: IProps) {
             </div>
           </div>
           <div className="w-full pt-5 flex justify-center">
-          {newPost.content !== "" ? (
-            <button
-              className="w-1/2 mx-auto px-3 py-2 bg-blue rounded-xl text-white text-lg hover:scale-105 transition-all dark:text-white700"
-              onClick={handleSubmit}
-            >
-              Đăng bài
-            </button>
-          ) : (
-            <button className="w-1/2 mx-auto px-3 py-2 bg-blue rounded-xl text-white text-lg hover:scale-105 transition-all dark:text-white700 opacity-50 cursor-not-allowed">
-              Đăng bài
-            </button>
-          )}
+            {newPost.content !== "" ? (
+              <button
+                className="w-1/2 mx-auto px-3 py-2 bg-blue rounded-xl text-white text-lg hover:scale-105 transition-all dark:text-white700"
+                onClick={handleSubmit}
+              >
+                Đăng bài
+              </button>
+            ) : (
+              <button className="w-1/2 mx-auto px-3 py-2 bg-blue rounded-xl text-white text-lg hover:scale-105 transition-all dark:text-white700 opacity-50 cursor-not-allowed">
+                Đăng bài
+              </button>
+            )}
           </div>
         </div>
       </div>

@@ -23,13 +23,13 @@ function Top3Cards() {
             </div>
             <div className="flex flex-row justify-between my-2 px-4">
               <div className="flex flex-row gap-2">
-                <p className="text-md text-fpoints">12</p>
+                <p className="text-md text-fpoints">20</p>
                 <p className="text-md text-fpoints sm:block hidden">FPoints</p>
               </div>
               <div className="flex flex-row gap-2">
-                <p className="text-md text-followers">12</p>
+                <p className="text-md text-followers">20</p>
                 <p className="text-md text-followers sm:block hidden">
-                  FPoints
+                  Followers
                 </p>
               </div>
             </div>
@@ -55,13 +55,13 @@ function Top3Cards() {
             </div>
             <div className="flex flex-row justify-between my-2 px-4">
               <div className="flex flex-row gap-2">
-                <p className="text-md text-fpoints">12</p>
+                <p className="text-md text-fpoints">20</p>
                 <p className="text-md text-fpoints sm:block hidden">FPoints</p>
               </div>
               <div className="flex flex-row gap-2">
-                <p className="text-md text-followers">12</p>
+                <p className="text-md text-followers">20</p>
                 <p className="text-md text-followers sm:block hidden">
-                  FPoints
+                Followers
                 </p>
               </div>
             </div>
@@ -87,13 +87,13 @@ function Top3Cards() {
             </div>
             <div className="flex flex-row justify-between my-2 px-4">
               <div className="flex flex-row gap-2">
-                <p className="text-md text-fpoints">12</p>
+                <p className="text-md text-fpoints">20</p>
                 <p className="text-md text-fpoints sm:block hidden">FPoints</p>
               </div>
               <div className="flex flex-row gap-2">
-                <p className="text-md text-followers">12</p>
+                <p className="text-md text-followers">20</p>
                 <p className="text-md text-followers sm:block hidden">
-                  FPoints
+                Followers
                 </p>
               </div>
             </div>

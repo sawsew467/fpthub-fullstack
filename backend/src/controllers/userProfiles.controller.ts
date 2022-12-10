@@ -11,8 +11,6 @@ class UserProfilesController {
 // Số lượng bái post của người đó
 // danh hiệu
 
-
-//Viết post
     public getUserProfile = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
             const accountId: number = Number(req.params.id);

@@ -24,12 +24,12 @@ export class PostEntity extends BaseEntity implements Post {
     @Column()
     like: number;
     
-    @Column()
+    @Column("longtext")
     @IsNotEmpty()
     content: string;
     
     @Column()
-    attachement: string;
+    attachment: string;
 
     @CreateDateColumn()
     createdAt: Date;

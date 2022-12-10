@@ -3,5 +3,6 @@ export interface Post {
     tag: string;
     like: number;
     content: string;
-    attachement: string;
+    attachment: string;
+    createdAt: Date
 }

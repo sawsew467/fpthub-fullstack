@@ -34,15 +34,26 @@ function CreatePostModal({ setIsShow }: IProps) {
   const { addPost } = bindActionCreators(postActionCreators, dispath);
   const handleSubmit = async () => {
     try {
-      const token = JSON.parse(`localStorage.getItem("token")`);
+      // const token = JSON.parse(`${localStorage.getItem("token")}`);
+      //eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNjcwNjc1NjM2LCJleHAiOjE2NzA2NzkyMzZ9.FFuH38LRPYqDbnCq62zousPqEtqJfB_71dPArgO9WmQ
       const options = {
         method: "post",
-        url: "/post",
-        data: newPost,
+        url: "/posts",
+        data: {
+          tag: "da",
+          content: "1 ngày của sinh viên đại học fpt",
+          attachment: "english.jpg",
+          accountId: 7,
+        },
         header: {
-          Authorization: `Bearer ${token}`,
+          Authorization:
+            "Bearer " +
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNjcwNjc2NzI4LCJleHAiOjE2NzA2ODAzMjh9.GzJrvmithbtz4R6D1YTxOmWGsNKKp4TIK76WITHtAyM",
+          "Content-Type": "application/json",
         },
       };
+      console.log("token");
+
       const response = await axios(options);
       console.log(response);
       addPost(newPost);

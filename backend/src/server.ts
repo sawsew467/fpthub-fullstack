@@ -9,6 +9,6 @@ import validateEnv from '@utils/validateEnv';
 
 validateEnv();
 
-const app = new App([new IndexRoute(), new AuthRoute(), new AccountsRoute(), new AchievedRoute(), new PostRoute() , new UserProfileRoute()]);
+const app = new App([new IndexRoute(), new PostRoute() ,new AccountsRoute(), new AchievedRoute() , new UserProfileRoute(), new AuthRoute()]);
 
 app.listen();

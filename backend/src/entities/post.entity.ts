@@ -37,6 +37,6 @@ export class PostEntity extends BaseEntity implements Post {
     @ManyToOne(() => AccountEntity, (account) => account.posts)
     account: AccountEntity;
 
-    @OneToMany(() => CommentEnitty, (comment) => comment.post)
+    @OneToMany(() => CommentEnitty, (comment) => comment.post, {cascade: true})
     comments: CommentEnitty[]
 }

@@ -3,7 +3,7 @@ import UserProfilesController from '@/controllers/userProfiles.controller';
 import { CreateUserProfileDto, UpdateUserProfile } from '@/dtos/userProfile.dto';
 import { Routes } from '@/interfaces/routes.interface';
 import validationMiddleware from '@/middlewares/validation.middleware';
-import authMiddleware from '@/middlewares/auth.middleware'
+import authMiddleware from '@/middlewares/auth.middleware';
 import accessProfileMidleware from '@/middlewares/accessProfile.middleware';
 
 class UserProfileRoute implements Routes {

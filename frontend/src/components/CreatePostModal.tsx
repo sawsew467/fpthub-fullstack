@@ -34,28 +34,48 @@ function CreatePostModal({ setIsShow }: IProps) {
   const { addPost } = bindActionCreators(postActionCreators, dispath);
   const handleSubmit = async () => {
     try {
-      // const token = JSON.parse(`${localStorage.getItem("token")}`);
+      // console.log("login", window.localStorage.getItem("token"));
+
+      const token = window.localStorage.getItem("token");
+      console.log(typeof token);
+      
+      // // const id = JSON.parse(`${window.localStorage.getItem("acountID")}`);
+      // console.log(token)
       //eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNjcwNjc1NjM2LCJleHAiOjE2NzA2NzkyMzZ9.FFuH38LRPYqDbnCq62zousPqEtqJfB_71dPArgO9WmQ
       const options = {
         method: "post",
-        url: "/posts",
+        url: "http://localhost:5000/posts",
         data: {
           tag: "da",
           content: "1 ngày của sinh viên đại học fpt",
           attachment: "english.jpg",
           accountId: 7,
         },
-        header: {
+        headers: {
           Authorization:
-            "Bearer " +
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNjcwNjc2NzI4LCJleHAiOjE2NzA2ODAzMjh9.GzJrvmithbtz4R6D1YTxOmWGsNKKp4TIK76WITHtAyM",
-          "Content-Type": "application/json",
+          `Bearer ${token}`
         },
       };
-      console.log("token");
 
       const response = await axios(options);
       console.log(response);
+      // const response = await fetch("http://localhost:5000/posts", {
+      //   method: "POST",
+      //   headers: {
+      //     Authorization:
+      //       `Bearer ${token}`,
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify({
+      //     tag: "da",
+      //     content: "1 ngày của sinh viên đại học fpt",
+      //     attachment: "english.jpg",
+      //     accountId: 7,
+      //   }),
+      // });
+
+      // const json = await response.json();
+      // console.log(json);
       addPost(newPost);
       setIsShow(false);
     } catch (err) {

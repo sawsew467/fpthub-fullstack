@@ -29,9 +29,9 @@ export class AccountEntity extends BaseEntity implements Account {
   @IsNotEmpty()
   role: number;
 
-  @OneToMany(() => PostEntity, (post) => post.account)
+  @OneToMany(() => PostEntity, (post) => post.account, { cascade: true})
   posts: PostEntity[];
 
-  @OneToMany(() => CommentEnitty, (comment) => comment.account)
+  @OneToMany(() => CommentEnitty, (comment) => comment.account, { cascade: true })
   comments: CommentEnitty[]
 }

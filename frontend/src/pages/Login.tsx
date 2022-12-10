@@ -22,13 +22,15 @@ function Login() {
       e.preventDefault();
       const option = {
         method: "post",
-        url: "/auth/login",
+        url: "http://localhost:5000/auth/login",
         data: inputData,
       };
       const response = await axios(option);
       const { email } = response.data.data;
+      const { id } = response.data.data;
       const { token } = response.data
       localStorage.setItem("token", token);
+      localStorage.setItem("acountID", id);
       console.log("token: ", token);
       console.log("email: ", email);
     } catch (error) {

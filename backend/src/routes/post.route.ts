@@ -22,6 +22,13 @@ class PostRoute implements Routes{
         this.router.get(`${this.path}/tag/:tag`, this.postController.getPostsByTag);
         this.router.get(`${this.path}/account/:accountId`, validationAccountId ,this.postController.getPostsByAccountId);
         this.router.delete(`${this.path}/delete/:postId`, this.postController.deletePostById);
+        this.router.post(`${this.path}/like/:postId`, this.postController.userLikePost);
+        this.router.post(`${this.path}/unlike/:postId`, this.postController.userUnlikePost);
+        this.router.post(`${this.path}/report/:postId`, this.postController.reportPost);
+        this.router.post(`${this.path}/unreport/:postId`, this.postController.unreportPost);
+        this.router.get(`${this.path}/saved`, this.postController.getAllPostSaved);
+        this.router.post(`${this.path}/save/:postId`, this.postController.userSavedPost);
+        this.router.post(`${this.path}/unsave/:postId`, this.postController.userUnsavedPost);
     }
 }
 

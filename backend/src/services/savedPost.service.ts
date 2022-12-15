@@ -6,11 +6,11 @@ import { AccountEntity } from "@/entities/account.entity";
 @EntityRepository()
 class SavedPostService extends Repository<SavedPostEntity> {
     //check curent user is saved post or not
-    public async isSaved(post: PostEntity, currAccount: AccountEntity): Promise<boolean> {
+    public async isSaved(postID: number, accountID: number): Promise<boolean> {
         const data = await SavedPostEntity.findOne({
             where: {
-                accountID: currAccount.id,
-                postID: post.id
+                accountID,
+                postID
             }
         });       
 
@@ -26,6 +26,29 @@ class SavedPostService extends Repository<SavedPostEntity> {
         });
 
         await SavedPostEntity.remove(data);
+    }
+  
+    public async savedPost(postID: number, accountID: number): Promise<void> {
+        const data = await this.isSaved(postID, accountID);
+        if(data){
+            return;
+        }
+        await SavedPostEntity.create({ postID, accountID }).save();
+    }
+
+    public async unSavedPost(postID: number, accountID: number): Promise<void> {
+        const data = await this.isSaved(postID, accountID);
+        if(!data){
+            return;
+        }
+        const savedPost: SavedPostEntity = await SavedPostEntity.findOne({ where: { postID, accountID } });
+        await SavedPostEntity.remove(savedPost);
+    }
+
+    //get all post that accountID save
+    public async allPostSaved(accountID: number): Promise<SavedPostEntity[]> {
+        const data: SavedPostEntity[] = await SavedPostEntity.find({ where: {accountID} });
+        return data;
     }
 }
 

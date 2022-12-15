@@ -8,6 +8,7 @@ import UserProfileService from "./userProfile.service";
 import LikedService from "./liked.service";
 import DislikedPostService from "./disliked.service";
 import SavedPostService from "./savedPost.service";
+import { SavedPostEntity } from "@/entities/savedPost.entity";
 
 @EntityRepository()
 class PostService extends Repository<PostEntity> {
@@ -19,9 +20,9 @@ class PostService extends Repository<PostEntity> {
 
     public async serializePostsArray(allPosts: PostEntity[], currAccount: AccountEntity): Promise<PostEntity[]> {
         for (const post of allPosts) {
-            const isLiked = await this.likedService.isLiked(post, currAccount);
-            const isDisliked = await this.disklikedPostService.isDisliked(post, currAccount);
-            const isSaved = await this.savedPostService.isSaved(post, currAccount);
+            const isLiked = await this.likedService.isLiked(post.id, currAccount);
+            const isDisliked = await this.disklikedPostService.isDisliked(post.id, currAccount);
+            const isSaved = await this.savedPostService.isSaved(post.id, currAccount.id);
             const newPost = plainClass(PostDto, post);
 
             const { fullname } = await this.userProfileService.findUserProfileById(newPost.accountId);
@@ -82,12 +83,30 @@ class PostService extends Repository<PostEntity> {
         return allPosts;
     }
 
+    //get Post by Post ID
+    public async getPostsByPostId(savedPosts: SavedPostEntity[], currentAccount: AccountEntity): Promise<PostEntity[]> {
+        let savedPostsArray: PostEntity[] = [];
+
+        for (const post of savedPosts) {
+            let postData: PostEntity = await PostEntity.createQueryBuilder("post")
+                .leftJoinAndSelect("post.account", "account")
+                .where("post.id = :id", {id: post.postID})
+                .orderBy("post.createdAt", "ASC")
+                .getOne()
+            
+            savedPostsArray.push(postData); 
+        }
+
+        savedPostsArray = await this.serializePostsArray(savedPostsArray, currentAccount);
+        return savedPostsArray
+    }
+
     //delete post by id
     public async deletePostById(id: number): Promise<number> {
         await PostEntity.createQueryBuilder("post")
-                .delete()
-                .where("id = :id", {id})
-                .execute();
+            .delete()
+            .where("id = :id", { id })
+            .execute();
 
         //remove all post id in saved, like, disLike table
         await this.likedService.deleteLikedPost(id);
@@ -98,6 +117,70 @@ class PostService extends Repository<PostEntity> {
 
 
     //like post
+    public async _userLikePost(id: number, currentAccount: AccountEntity): Promise<void> {
+        const isLike: boolean = await this.likedService.isLiked(id, currentAccount);
+        if(isLike){
+            return;
+        }
+        await this._userUnReportPost(id, currentAccount);
+        this.likedService.userLikePost(id, currentAccount.id);
+        //increase like of post 
+        const data: PostEntity = await PostEntity.findOne({ where: { id } });
+        // console.log(data);
+        data["like"] = data["like"]+1;
+        // console.log(data);
+        await PostEntity.save(data);
+    }
+
+    public async _userUnlikePost(id: number, currentAccount: AccountEntity): Promise<void> {
+        const isLike: boolean = await this.likedService.isLiked(id, currentAccount);
+        if(!isLike){
+            return;
+        }
+        await this.likedService.userUnlikePost(id, currentAccount.id);
+        //decrease like of post
+        const data: PostEntity = await PostEntity.findOne({ where: { id } });
+        const like = data["like"]-1;
+        data["like"] = like >= 0 ? like : 0;
+        await PostEntity.save(data); 
+    }
+
+    // cam co post
+    public async _userReportPost(id: number, currentAccount: AccountEntity): Promise<void> {
+        const isDisliked: boolean = await this.disklikedPostService.isDisliked(id, currentAccount);
+        if(isDisliked){
+            return;
+        }
+        //decrease like post and delete in like table with accountId and postID
+        await this._userUnlikePost(id, currentAccount);
+        //create report 
+        await this.disklikedPostService.createReport(id, currentAccount.id);
+    }
+
+    public async _userUnReportPost(id: number, currentAccount: AccountEntity): Promise<void> {
+        const isDisliked: boolean = await this.disklikedPostService.isDisliked(id, currentAccount);
+        if(!isDisliked){
+            return;
+        }
+        await this.disklikedPostService.findAndDelete(id, currentAccount.id);
+    }
+
+    public async _userSavePost(id: number, currentAccount: AccountEntity): Promise<void> {
+        await this.savedPostService.savedPost(id, currentAccount.id);
+    }
+
+    public async _userUnsavedPost(id: number, currentAccount: AccountEntity): Promise<void> {
+        await this.savedPostService.unSavedPost(id, currentAccount.id);
+    }
+
+    //get all post saved by accountID
+    public async _getAllSavedPosts(currentAccount: AccountEntity): Promise<PostEntity[]> {
+        const data: SavedPostEntity[] = await this.savedPostService.allPostSaved(currentAccount.id);
+        const savedPosts: PostEntity[] = await this.getPostsByPostId(data, currentAccount);
+
+        return savedPosts;
+    }
+
 }
 
 export default PostService;

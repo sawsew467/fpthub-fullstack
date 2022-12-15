@@ -70,6 +70,85 @@ class PostController {
     }
 
     //like post
+    public userLikePost = async (req: RequestWithAccount, res: Response, next: NextFunction): Promise<void> => {
+        try {
+            const postID = parseInt(req.params.postId);
+            await this.postService._userLikePost(postID, req.account as AccountEntity);
+
+            res.status(201).json({ data: { postID }, messages: `update like post with id ${postID}` });
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    //unlike post
+    public userUnlikePost = async (req: RequestWithAccount, res: Response, next: NextFunction): Promise<void> => {
+        try {
+            const postID = parseInt(req.params.postId);
+            await this.postService._userUnlikePost(postID, req.account as AccountEntity );
+            
+            res.status(201).json({ data: { postID }, messages: `update unlike post with id ${postID}` });
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    //report post
+    public reportPost = async (req: RequestWithAccount, res: Response, next: NextFunction): Promise<void> => {
+        try {
+            const postID = parseInt(req.params.postId);
+            await this.postService._userReportPost(postID, req.account as AccountEntity);
+
+            res.status(201).json({ data: {postID} , messages: `report post with id ${postID}`});
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    public unreportPost = async (req: RequestWithAccount, res: Response, next: NextFunction): Promise<void> => {
+        try {
+            const postID = parseInt(req.params.postId);
+            await this.postService._userUnReportPost(postID, req.account as AccountEntity);
+
+            res.status(201).json({ data: {postID} , messages: `unreport post with id ${postID}`});
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    //save post
+    public userSavedPost = async (req: RequestWithAccount, res: Response, next: NextFunction): Promise<void> => {
+        try {
+            const postID = parseInt(req.params.postId);
+            await this.postService._userSavePost(postID, req.account as AccountEntity);
+
+            res.status(201).json({ data: {postID}, messages: `saved post with id ${postID} ` });
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    public userUnsavedPost = async (req: RequestWithAccount, res: Response, next: NextFunction): Promise<void> => {
+        try {
+            const postID = parseInt(req.params.postId);
+            await this.postService._userUnsavedPost(postID, req.account as AccountEntity);
+
+            res.status(201).json({ data: {postID}, messages: `unsaved post with id ${postID} ` });
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    //get all post saved by account
+    public getAllPostSaved = async (req: RequestWithAccount, res: Response, next: NextFunction): Promise<void> => {
+        try {
+            const savedPosts = await this.postService._getAllSavedPosts(req.account as AccountEntity);
+
+            res.status(200).json({ data: {savedPosts}, messages: "find all" });
+        } catch (error) {
+            next(error);
+        }
+    }
 }
 
 export default PostController;

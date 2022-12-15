@@ -24,8 +24,8 @@ class AuthService extends Repository<AccountEntity> {
 
     const findAccount: Account = await this.accountService.findAccountByEmail(accountData.email);
    
-    const isPasswordMatching: boolean = await compare(accountData.password, findAccount.password);
-    if (!isPasswordMatching) throw new HttpException(409, "Password not matching");
+    // const isPasswordMatching: boolean = await compare(accountData.password, findAccount.password);
+    // if (!isPasswordMatching) throw new HttpException(409, "Password not matching");
 
     const tokenData = this.createToken(findAccount);
     const cookie = this.createCookie(tokenData);
